@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?> <!-- 声明清单文件使用 UTF-8 编码 -->
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0"> <!-- 定义 Windows 应用清单根节点 -->
+  <assemblyIdentity version="1.0.0.0" name="DeskToDo" /> <!-- 提供应用清单的名称和版本 -->
+  <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3"> <!-- 开始声明应用权限 -->
+    <security> <!-- 打开安全设置节点 -->
+      <requestedPrivileges> <!-- 列出应用启动时请求的权限 -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" /> <!-- 沿用启动者权限，无需管理员提权 -->
+      </requestedPrivileges> <!-- 结束启动权限设置 -->
+    </security> <!-- 结束安全设置 -->
+  </trustInfo> <!-- 结束权限声明 -->
+  <application xmlns="urn:schemas-microsoft-com:asm.v3"> <!-- 打开应用兼容性设置 -->
+    <windowsSettings> <!-- 定义应用采用的 Windows 设置 -->
+      <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true</dpiAware> <!-- 声明应用感知系统 DPI -->
+    </windowsSettings> <!-- 结束 Windows 设置 -->
+  </application> <!-- 结束应用兼容性设置 -->
+</assembly> <!-- 结束应用清单 -->

@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="920" viewBox="0 0 1240 920" role="img" aria-labelledby="title description">
+  <title id="title">DeskToDo 架构图</title>
+  <desc id="description">资源管理器将文件路径传给 DeskToDo 主窗口。Program 启动应用，MainForm 和 RecentlyDeletedDialog 共用 EntryStore，保存主清单、最近删除和快捷方式。两个窗口均可通过 Windows Shell 打开已保存的快捷方式。最近删除中的项目只有手动还原才回到主清单。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 8 4.5 L 0 9 Z" fill="#587085" />
+    </marker>
+    <marker id="blue-arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 8 4.5 L 0 9 Z" fill="#296696" />
+    </marker>
+    <style>
+      text { font-family: 'Microsoft YaHei UI', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif; fill: #192d40; }
+      .title { font-size: 36px; font-weight: 700; }
+      .subtitle { font-size: 17px; fill: #506677; }
+      .box { fill: #fff; stroke: #c8d6e1; stroke-width: 1.4; }
+      .main { fill: #e8f2fc; stroke: #84acd0; stroke-width: 1.5; }
+      .heading { font-size: 23px; font-weight: 700; }
+      .body { font-size: 16px; }
+      .muted { font-size: 15px; fill: #506677; }
+      .label { font-size: 14px; fill: #36546d; font-weight: 600; }
+      .path { font-family: Consolas, 'Microsoft YaHei UI', monospace; font-size: 16px; font-weight: 600; }
+      .link { fill: none; stroke: #587085; stroke-width: 2; marker-end: url(#arrow); }
+      .logic-link { fill: none; stroke: #296696; stroke-width: 2; marker-end: url(#blue-arrow); }
+    </style>
+  </defs>
+
+  <rect width="1240" height="920" fill="#f5f8fb" />
+  <text class="title" x="52" y="66">DeskToDo 架构图</text>
+  <text class="subtitle" x="54" y="101">单 EXE  ·  C# WinForms  ·  .NET Framework 4.8  ·  当前用户权限</text>
+
+  <rect class="box" x="52" y="150" width="252" height="126" rx="14" />
+  <text class="heading" x="74" y="188">桌面 / 资源管理器</text>
+  <text class="body" x="74" y="221">文件、文件夹、快捷方式</text>
+  <text class="muted" x="74" y="249">通过 Windows 拖放提供路径</text>
+
+  <rect class="main" x="426" y="142" width="388" height="142" rx="14" />
+  <text class="heading" x="450" y="180">MainForm</text>
+  <text class="body" x="450" y="215">接收拖放，显示名称、更新时间和原始位置</text>
+  <text class="body" x="450" y="241">上下排序、双击打开、重命名和删除</text>
+  <text class="muted" x="450" y="266">RecentlyDeletedDialog · 打开、还原、永久删除</text>
+
+  <rect class="box" x="936" y="150" width="252" height="126" rx="14" />
+  <text class="heading" x="958" y="188">Program</text>
+  <text class="body" x="958" y="221">创建 EntryStore 和主窗体</text>
+  <text class="muted" x="958" y="249">启动 WinForms 消息循环</text>
+
+  <path class="link" d="M 304 213 H 422" />
+  <text class="label" x="365" y="199" text-anchor="middle">FileDrop</text>
+  <path class="link" d="M 936 213 H 818" />
+  <text class="label" x="875" y="199" text-anchor="middle">启动窗体</text>
+  <path class="logic-link" d="M 620 284 V 354" />
+  <text class="label" x="636" y="329">提交操作 / 读取清单</text>
+
+  <rect class="main" x="370" y="358" width="500" height="149" rx="14" />
+  <text class="heading" x="396" y="397">EntryStore</text>
+  <text class="body" x="396" y="431">用独立 GUID 关联条目和快捷方式，维护列表顺序</text>
+  <text class="body" x="396" y="458">移动、还原条目时沿用已有的快捷方式</text>
+  <text class="muted" x="396" y="484">持有独占文件锁，原子保存主清单和删除历史</text>
+
+  <rect x="52" y="630" width="786" height="205" rx="16" fill="#eaf0f4" stroke="#cbd8e2" />
+  <path class="link" d="M 466 507 V 588 H 226 V 688" />
+  <text class="label" x="334" y="575" text-anchor="middle">序列化 / 恢复</text>
+  <path class="link" d="M 620 507 V 688" />
+  <text class="label" x="636" y="575">创建、复制或移除</text>
+  <path class="link" d="M 774 507 V 588 H 1032 V 688" />
+  <text class="label" x="908" y="575" text-anchor="middle">交给系统打开</text>
+
+  <text class="path" x="72" y="660">%LOCALAPPDATA%\DeskToDo</text>
+  <rect class="box" x="73" y="692" width="306" height="120" rx="11" />
+  <text class="path" x="93" y="724">entries.json</text>
+  <text class="body" x="93" y="754">主清单元数据、更新时间、顺序</text>
+  <text class="muted" x="93" y="783">主清单限 100 条，最近删除限 30 条</text>
+
+  <rect class="box" x="404" y="692" width="413" height="120" rx="11" />
+  <text class="path" x="424" y="724">Shortcuts\</text>
+  <text class="body" x="424" y="754">文件 / 文件夹 → WindowsShortcut 生成 .lnk</text>
+  <text class="body" x="424" y="783">已有 .lnk / .url → File.Copy 原样保存</text>
+
+  <rect class="box" x="874" y="692" width="314" height="120" rx="11" />
+  <text class="heading" x="896" y="727">Windows Shell</text>
+  <text class="body" x="896" y="756">打开已保存的快捷方式</text>
+  <text class="muted" x="896" y="783">由系统按链接目标及文件关联处理</text>
+  <path class="link" d="M 817 750 H 870" />
+
+  <text class="subtitle" x="54" y="874">最近删除中的条目仅在手动还原后返回主清单。永久删除移除历史记录并清理应用快捷方式，保留源文件。</text>
+</svg>
